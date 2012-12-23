@@ -1,0 +1,80 @@
+html,body{
+	padding: 0px;
+	margin: 0px;
+	background: #3e3e3e;
+	color:  #fff;
+	font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+}
+
+body{
+	text-align: center;
+}
+
+/*	Slidedhow display	*/
+
+#image_Box_Curtain{
+	min-width: 100%;
+	min-height: 100%;
+	background: rgba(0,0,0,0.48);
+	z-index: 20;
+	position: fixed;
+	display: block;
+}
+
+#image_Box img.fullImage{
+	max-width: 900px;
+	max-height: 600px;
+}
+#image_Box{
+	width: 940px;
+	height: 640px;
+	text-align: center;
+	display: inline-block;
+	background: #ccc;
+	color: #666;
+	border: 1px solid #fff;
+	position: fixed;
+	
+	margin: auto;
+	
+	visibility: hidden;
+}
+/*	Slideshow gallery	*/
+#slideshow_Area{
+	width: 960px;
+	height: auto;
+	margin: 5px;
+	display: inline-block;
+}
+
+#slideshow_Content{
+	width: 960px;
+}
+
+#slideshow_Title{
+	text-align: left;
+	font-size:large;
+	padding-left: 5px;
+}
+
+#slideshow_Content .column{
+	width: 180px;
+	float: left;
+	margin: 5px;
+}
+
+#slideshow_Content .thumbnail{
+	width: 180px;
+	max-height: 180px;
+	margin: 5px 0;
+	background: #595959;
+	border: #888 1px solid;
+}
+#slideshow_Content .thumbnail:hover{
+	background: #777;
+}
+#slideshow_Content .thumbnail p{
+	margin: 3px;
+	text-align: center;
+	color: #ddd;
+}
