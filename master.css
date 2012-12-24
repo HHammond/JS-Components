@@ -13,32 +13,62 @@ body{
 /*	Slidedhow display	*/
 
 #image_Box_Curtain{
-	min-width: 100%;
-	min-height: 100%;
-	background: rgba(0,0,0,0.48);
-	z-index: 20;
+	display: none;
 	position: fixed;
-	display: block;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	z-index:100;
 }
 
-#image_Box img.fullImage{
-	max-width: 900px;
-	max-height: 600px;
+#image_Box #fullImage{
+	max-width: 100%;
+	max-height: 100%;
+	margin: auto;
+	vertical-align: middle;
+	display: block;
 }
 #image_Box{
-	width: 940px;
-	height: 640px;
-	text-align: center;
-	display: inline-block;
-	background: #ccc;
-	color: #666;
-	border: 1px solid #fff;
+	display: none;
 	position: fixed;
-	
-	margin: auto;
-	
-	visibility: hidden;
+	top: 10%;
+	left: 10%;
+	width: 80%;
+	height: 80%;
+	padding: 5px;
+	border: 1px solid #fff;
+	background-color: #eaeaea;
+	z-index:1002;
+	overflow: auto;
+	color: #444;	
+	text-align: center;
+	vertical-align: middle;
 }
+
+#image_Box #close_Button{
+	width: 15px;
+	height: 15px;
+	background: #ccc;
+	text-align: center;
+	padding: 2px;
+	display: block;
+	z-index: 1;
+	float: right;
+	color: #000;
+}
+
+#image_Box .close_Button:hover{
+	background: #000;
+}
+
+
+#image_Box p{
+	margin: 3px;
+	font-size: large;
+}
+
 /*	Slideshow gallery	*/
 #slideshow_Area{
 	width: 960px;
@@ -66,15 +96,23 @@ body{
 #slideshow_Content .thumbnail{
 	width: 180px;
 	max-height: 180px;
-	margin: 5px 0;
+	margin: 5px 0 8px;
 	background: #595959;
 	border: #888 1px solid;
+	cursor: pointer;
 }
 #slideshow_Content .thumbnail:hover{
 	background: #777;
 }
+#slideshow_Content img{
+	margin: 2px;
+	max-width: 178px;
+	max-height: 178px;
+	vertical-align: middle;
+	position: relative;
+ }
 #slideshow_Content .thumbnail p{
-	margin: 3px;
+	margin: -3px 0 3px 0;
 	text-align: center;
 	color: #ddd;
 }

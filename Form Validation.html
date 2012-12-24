@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=utf-8 />
+		<title></title>
+
+		<script src="jquery.1.8.3.min.js"></script>
+
+		<script>
+
+		$(document).ready(function(){
+
+
+
+			$("#EmailAddressForm").submit( function(){
+
+				var addr = $("#AddressField").attr("value");
+				addr = addr.replace(/(^\s|\s$)/g,'');
+				//regex expression to check for at least one character in valid email range
+				//followed by @ sign, followed by valid domain characters, followed by .xxxx as tld
+
+				var emailChar = "a-zA-Z0-9!#\$%\&\'\*\+-/\=\?\^_`\{\|\}~\."
+				var specialEmailChar = "\(\),:;<>@\[\\\]\ ";
+				//var emailChar = "(["+emailChar+"]|\"["+emailChar+specialEmailChar+"]*\"")";
+
+				var domain = "[a-zA-Z0-9\.-]+\.[a-zA-Z]{2,4}";
+				var sub = "[0-9]{1,3}\.";
+				var IP  = "("+sub+"){3}";
+
+				//var regex = new RegExp( "^["+emailChar+"]+@"+domain+"|"+IP+"$" );
+				 var regex = new RegExp( "^["+emailChar+"]+@"+domain+"$" )
+
+
+				var match = addr.match(regex);
+
+
+				$("#indicator").html( match );
+
+			});
+
+		}); 
+		
+		</script>
+
+	</head>
+
+	<body>
+	 
+		<div id="form_container">
+			<form id='EmailAddressForm' action='#' >
+				<input id='AddressField' value='Email Address'></input>
+
+				<input type='submit'></input>
+			</form>
+
+			<div id='indicator'></div>
+
+
+		</div>
+
+
+	</body>
+</html>

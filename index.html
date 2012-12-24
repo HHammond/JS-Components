@@ -5,22 +5,108 @@
 		<title></title>
 		<link rel="stylesheet" type="text/css" media="screen" href="master.css" />
 
-		<!-- download JQuery lib -->
 		<script src="jquery.1.8.3.min.js"></script>
-		<script src="slideshow.js"></script>
 
-		<script></script>
+		<script>
+
+		$(document).ready(function(){
+
+			// get xml data from server
+			$.ajax({
+				type: "GET",
+				url: "images/thumbs.xml",
+				dataType: "xml",
+				success: parseThumbnailsFromXML
+			});
+
+			// parse and generate thumbnails from xml data
+			function parseThumbnailsFromXML(xml){
+				var list = new Array();
+				$(xml).find("img").each(function(){
+					
+					list.push( $(this).attr("src") );
+
+				});
+
+				// format xml data and append to DOM through slideshow_Content
+				var cols = 5;
+				for(var c=0;c<cols;c++){
+
+					var col = $("<div/>",{ 'class':'column' });
+
+					for( var i = c*cols;i< (c+1)*cols && i < list.length;i++){
+
+						var thumb = $("<div/>",{ 'class':'thumbnail' });
+						var icon  = $("<img/>",{ 'class':'thumb_Image'}).attr("src","images/"+list[i]);
+						thumb.append(icon);
+						col.append(thumb);
+					}
+					$("#slideshow_Content").append( col );
+				}
+
+				// add listeners to thumbnail objects to open lightbox style window
+				$(".thumbnail").click(function(){
+
+					// get image url from thumbnail and conver to full url
+					var image_url = $(".thumb_Image",this).attr("src");
+					var JPEG_suffix = /_tn.jpg/gi;
+					image_url = image_url.replace( JPEG_suffix,".jpg");
+					$("#image_Box #fullImage").attr("src","loadinfo.net.gif");
+					//$("#image_Box #fullImage").css("display","hidden");
+					openImageBox();
+
+					
+					// preload image and fade in the elements
+					var imageObj = new Image();
+					imageObj.src = image_url;
+
+
+					// open image box after preloading
+					imageObj.onload = function(){
+						$("#image_Box #fullImage").attr("src",image_url);
+						$("#image_Box #fullImage").fadeIn();
+						// show graphic elements
+					};
+				});
+			}// finished parsing
+
+
+			// image_Box close button
+			$("#image_Box #close_Button").click(function(){
+				// hide graphic elements
+				closeImageBox();
+			});
+			// image_Box close button
+			$("#image_Box_Curtain").click(function(){
+				// hide graphic elements
+				closeImageBox();
+			});
+
+
+			// open image box
+			function openImageBox(){
+				$("#image_Box").fadeIn("slow");
+				$("#image_Box_Curtain").fadeTo("fast",0.5);
+			}
+			// close image box
+			function closeImageBox(){
+				$("#image_Box").fadeOut();
+				$("#image_Box_Curtain").fadeOut();
+			}
+		}); 
+		
+		</script>
 
 	</head>
 
 	<body>
-	 	
-		<!-- <div id='image_Box_Curtain' /> -->
-
+	 
 		<div id='image_Box'>
 
-			<img class='fullImage' src='images/DSC_4874.jpg' />
-			<p>Image Title</p>
+			<a href="#"><div id='close_Button'>X</div></a>
+
+			<img id='fullImage' src='images/DSC_4874.jpg' />
+			<!-- <p>Image Title</p> -->
 
 		</div>
 
@@ -30,125 +116,11 @@
 			</div>
 
 			<div id='slideshow_Content'>
-
-
-				<div class='column'>
-
-					<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_4874_tn.jpg'>
-						<p>Img description</p>
-					</div>
-					<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_4842_tn.jpg'>
-					</div>
-					<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_5060_tn.jpg'>
-					</div>
-					<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_5100_tn.jpg'>
-					</div>
-					<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_5563_tn.jpg'>
-					</div>
-
-				</div>
-
-				<div class='column'>
-
-					<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_4874_tn.jpg'>
-						<p>Img description</p>
-					</div>
-
-										<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_5100_tn.jpg'>
-					</div>
-					<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_5563_tn.jpg'>
-					</div>
-					<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_4842_tn.jpg'>
-					</div>
-					<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_5060_tn.jpg'>
-					</div>
-
-
-				</div>
-
-				<div class='column'>
-
-					<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_5100_tn.jpg'>
-					</div>
-					<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_5563_tn.jpg'>
-					</div>
-
-					<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_4874_tn.jpg'>
-						<p>Img description</p>
-					</div>
-
-										<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_5100_tn.jpg'>
-					</div>
-					<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_5563_tn.jpg'>
-					</div>
-
-
-
-				</div>
-
-				<div class='column'>
-
-					<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_5739_tn.jpg'>
-					</div>
-					<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_4874_tn.jpg'>
-					</div>
-					<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_4874_tn.jpg'>
-					</div>
-
-					<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_4874_tn.jpg'>
-					</div>
-					<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_4874_tn.jpg'>
-					</div>
-
-				</div>
-
-				<div class='column'>
-
-					<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_4874_tn.jpg'>
-						<p>Img description</p>
-					</div>
-					<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_4842_tn.jpg'>
-					</div>
-					<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_5060_tn.jpg'>
-					</div>
-					<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_5100_tn.jpg'>
-					</div>
-					<div class='thumbnail'>
-						<img class='thumb_Image' src='images/DSC_5563_tn.jpg'>
-					</div>
-
-				</div>
-
-
-
-
+				<!-- Slideshow content will be generated here -->
 			</div>
 		</div>
 
+		<div id='image_Box_Curtain' />
 
 
 	</body>
