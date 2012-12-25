@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=utf-8 />
+		<title></title>
+
+		<script src="jquery.1.8.3.min.js"></script>
+
+		<script>
+
+		$(document).ready(function(){
+
+
+			//to check the equation we will generate a random equation
+			//break it into randomized partitions with random names
+			//so as to confuse screen readers
+			//then store the value in a local variable which has been
+			//hashed to preserve security
+			var sum;	
+
+			magicEquation();
+
+			function magicEquation(){
+				//we don't want this to be too difficult to answer, so no complex operations
+				var operators = "+-";
+				var max = 51;
+				var min = 0;
+
+				//generate numbers and add to a list
+				var len = 100;
+				var randomNums = new Array();
+				for(var i=0;i<len;i++){
+					randomNums[i] = randomInt(min,max);
+				}	
+				
+				//grab random index
+				var equation = randomNums[randomInt(0,len)] + operators.charAt(randomInt(0,2)) + randomNums[randomInt(0,len)];
+
+				$("#indicator").html(equation);
+
+				
+			}
+
+			function randomInt(min,max){
+				return Math.floor((Math.random()*(max-min))+min);
+ 			}
+
+
+		}); 
+	</script>
+
+	</head>
+
+	<body>
+	 
+		<div id="form_container">
+			<form id='checkNumber' action='#' >
+				<input id='input' value=''></input>
+
+				<input type='submit'></input>
+			</form>
+			<div id='displayArea'></div>
+			<div id='indicator'></div>
+
+
+		</div>
+
+
+	</body>
+</html>

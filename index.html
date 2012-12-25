@@ -3,9 +3,11 @@
 	<head>
 		<meta charset=utf-8 />
 		<title></title>
-		<link rel="stylesheet" type="text/css" media="screen" href="master.css" />
+		<link rel="stylesheet" type="text/css" href="master.css" />
 
 		<script src="jquery.1.8.3.min.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="slideshow.css" />
 		<script src="slideshow.js"></script>
 
 
@@ -14,6 +16,9 @@
 	<body>
 
 		<!-- Gallery Area -->
+		<noscript>
+			<h3>Javascript must be enabled for image gallery!</h3>
+		</noscript>
 		<div id='slideshow_Area'>
 			<div id='slideshow_Title'>
 				Slidshow Album Title
@@ -23,21 +28,17 @@
 				<!-- Slideshow content will be generated here -->
 			</div>
 		</div>
-
-
-		<!-- Image box -->
+		<!-- End Gallery -->
+		<!-- Image Box -->
 		<div id='image_Box_Fader'>
 			<div id='image_Box'>
-
 				<img id='fullImage' src='images/DSC_4874.jpg' />
-<!-- 				<p id='title'>Image Title</p>
- -->			</div>
-			<a href="#"><div id='image_Box_close_Button'>›‹</div></a>
-			<a href="#"><div id='image_Box_prev_Button'><div>«</div></div></a>
-			<a href="#"><div id='image_Box_next_Button'><div>»</div></div></a>	
+			</div>
+			<a href="#" alt="close"><div id='image_Box_close_Button'>›‹</div></a>
+			<a href="#" alt="pervious"><div id='image_Box_prev_Button'><div>«</div></div></a>
+			<a href="#" alt="next"><div id='image_Box_next_Button'><div>»</div></div></a>	
 			<div id='image_Box_Curtain' />
 		</div>	
-		
-
+		<!-- end Image Box -->
 	</body>
 </html>

@@ -10,36 +10,31 @@
 
 		$(document).ready(function(){
 
-
-
 			$("#EmailAddressForm").submit( function(){
 
 				var addr = $("#AddressField").attr("value");
 				addr = addr.replace(/(^\s|\s$)/g,'');
-				//regex expression to check for at least one character in valid email range
-				//followed by @ sign, followed by valid domain characters, followed by .xxxx as tld
-
-				var emailChar = "a-zA-Z0-9!#\$%\&\'\*\+-/\=\?\^_`\{\|\}~\."
-				var specialEmailChar = "\(\),:;<>@\[\\\]\ ";
-				//var emailChar = "(["+emailChar+"]|\"["+emailChar+specialEmailChar+"]*\"")";
-
-				var domain = "[a-zA-Z0-9\.-]+\.[a-zA-Z]{2,4}";
-				var sub = "[0-9]{1,3}\.";
-				var IP  = "("+sub+"){3}";
-
-				//var regex = new RegExp( "^["+emailChar+"]+@"+domain+"|"+IP+"$" );
-				 var regex = new RegExp( "^["+emailChar+"]+@"+domain+"$" )
-
-
-				var match = addr.match(regex);
-
-
-				$("#indicator").html( match );
+				
+				$("#indicator").html( checkValidAddress(addr) );
 
 			});
 
 		}); 
 		
+		//basic email address verification (note that no regex can validate all email addresses successfully)
+		//this address verification system will not allow complex emails such as "abc@ def"@ggj.com or IP based addresses
+		function checkValidAddress(address){
+			//regex expression to check for at least one character in valid email range
+			//followed by @ sign, followed by valid domain characters, followed by .xxxx as tld
+			var local = "[a-zA-Z0-9!#\$%\&\'\*\+-/\=\?\^_`\{\|\}~\.]+"
+			var domain = "[a-zA-Z0-9\.-]+\.[a-zA-Z]{2,4}";
+			var regex = new RegExp( "^"+local+"@"+domain+"$" );
+			var match = address.match(regex);
+
+			if (match==address) return "valid address";
+			return "invalid address";
+		}
+
 		</script>
 
 	</head>

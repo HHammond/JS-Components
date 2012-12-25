@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imglist>
+<?xml version="1.0"?>
+<imgList>
+
 <img src="DSC_4842_tn.jpg" />
 <img src="DSC_4874_tn.jpg" />
 <img src="DSC_4877_tn.jpg" />
@@ -43,4 +44,5 @@
 <img src="DSC_6381_tn.jpg" />
 <img src="DSC_6410_tn.jpg" />
 <img src="DSC_6415_tn.jpg" />
-</imglist>
+
+</imgList>
