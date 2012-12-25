@@ -6,110 +6,14 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="master.css" />
 
 		<script src="jquery.1.8.3.min.js"></script>
+		<script src="slideshow.js"></script>
 
-		<script>
-
-		$(document).ready(function(){
-
-			// get xml data from server
-			$.ajax({
-				type: "GET",
-				url: "images/thumbs.xml",
-				dataType: "xml",
-				success: parseThumbnailsFromXML
-			});
-
-			// parse and generate thumbnails from xml data
-			function parseThumbnailsFromXML(xml){
-				var list = new Array();
-				$(xml).find("img").each(function(){
-					
-					list.push( $(this).attr("src") );
-
-				});
-
-				// format xml data and append to DOM through slideshow_Content
-				var cols = 5;
-				for(var c=0;c<cols;c++){
-
-					var col = $("<div/>",{ 'class':'column' });
-
-					for( var i = c*cols;i< (c+1)*cols && i < list.length;i++){
-
-						var thumb = $("<div/>",{ 'class':'thumbnail' });
-						var icon  = $("<img/>",{ 'class':'thumb_Image'}).attr("src","images/"+list[i]);
-						thumb.append(icon);
-						col.append(thumb);
-					}
-					$("#slideshow_Content").append( col );
-				}
-
-				// add listeners to thumbnail objects to open lightbox style window
-				$(".thumbnail").click(function(){
-
-					// get image url from thumbnail and conver to full url
-					var image_url = $(".thumb_Image",this).attr("src");
-					var JPEG_suffix = /_tn.jpg/gi;
-					image_url = image_url.replace( JPEG_suffix,".jpg");
-					$("#image_Box #fullImage").attr("src","loadinfo.net.gif");
-					//$("#image_Box #fullImage").css("display","hidden");
-					openImageBox();
-
-					
-					// preload image and fade in the elements
-					var imageObj = new Image();
-					imageObj.src = image_url;
-
-
-					// open image box after preloading
-					imageObj.onload = function(){
-						$("#image_Box #fullImage").attr("src",image_url);
-						$("#image_Box #fullImage").fadeIn();
-						// show graphic elements
-					};
-				});
-			}// finished parsing
-
-
-			// image_Box close button
-			$("#image_Box #close_Button").click(function(){
-				// hide graphic elements
-				closeImageBox();
-			});
-			// image_Box close button
-			$("#image_Box_Curtain").click(function(){
-				// hide graphic elements
-				closeImageBox();
-			});
-
-
-			// open image box
-			function openImageBox(){
-				$("#image_Box").fadeIn("slow");
-				$("#image_Box_Curtain").fadeTo("fast",0.5);
-			}
-			// close image box
-			function closeImageBox(){
-				$("#image_Box").fadeOut();
-				$("#image_Box_Curtain").fadeOut();
-			}
-		}); 
-		
-		</script>
 
 	</head>
 
 	<body>
-	 
-		<div id='image_Box'>
 
-			<a href="#"><div id='close_Button'>X</div></a>
-
-			<img id='fullImage' src='images/DSC_4874.jpg' />
-			<!-- <p>Image Title</p> -->
-
-		</div>
-
+		<!-- Gallery Area -->
 		<div id='slideshow_Area'>
 			<div id='slideshow_Title'>
 				Slidshow Album Title
@@ -120,8 +24,20 @@
 			</div>
 		</div>
 
-		<div id='image_Box_Curtain' />
 
+		<!-- Image box -->
+		<div id='image_Box_Fader'>
+			<div id='image_Box'>
+
+				<img id='fullImage' src='images/DSC_4874.jpg' />
+<!-- 				<p id='title'>Image Title</p>
+ -->			</div>
+			<a href="#"><div id='image_Box_close_Button'>›‹</div></a>
+			<a href="#"><div id='image_Box_prev_Button'><div>«</div></div></a>
+			<a href="#"><div id='image_Box_next_Button'><div>»</div></div></a>	
+			<div id='image_Box_Curtain' />
+		</div>	
+		
 
 	</body>
 </html>
