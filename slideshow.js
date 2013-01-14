@@ -7,12 +7,15 @@ $(document).ready(function(){
 	var cols = 5;
 	var open = false;
 
+	var thumbnailSuffix = "_tn.jpg";
+	var imageFolder = "images/";
+
 	// get xml data from server
 	$.ajax({
 		type: "GET",
 		
 		// request thumbnail xml file
-		url: "images/thumbs.xml",
+		url: imageFolder+"thumbs.xml",
 		dataType: "xml",
 		
 		//on successful load, call parsing function
@@ -47,7 +50,7 @@ $(document).ready(function(){
 			
 			// create thumb and img objects
 			var thumb = $("<div/>",{ 'class':'thumbnail' });
-			var image  = $("<img/>",{ 'class':'thumb_Image'}).attr("src","images/"+list[i]);
+			var image  = $("<img/>",{ 'class':'thumb_Image'}).attr("src",imageFolder+list[i]);
 			thumb.append(image);
 
 			// iterate and loop through columns using modular arithmetic
@@ -61,12 +64,13 @@ $(document).ready(function(){
 
 			// get image url from thumbnail and conver to full url
 			var image_url = $(".thumb_Image",this).attr("src");
-			var JPEG_suffix = /_tn.jpg/gi;	// regex to change file suffix
+			// var JPEG_suffix = /_tn.jpg/gi;	// regex to change file suffix
+			var JPEG_suffix = new RegExp(thumbnailSuffix+"$","gi");
 			image_url = image_url.replace( JPEG_suffix,".jpg");
 
 			// set image to loading icon and hide
 			$("#image_Box #fullImage").attr("src","loadinfo.net.gif");
-			$("#image_Box #fullImage").css("display","hidden");
+			$("#image_Box #fullImage").hide();
 			
 			// open slideshow window
 			openImageBox();
@@ -112,11 +116,11 @@ $(document).ready(function(){
 		
 		// convert image to thumbnail name
 		// remove prefix
-		var JPEG_suffix = /^images\//gi;
-		var image_url = image.replace( "images/","");
+		var folderPrefix = new RegExp(imageFolder,"gi");
+		var image_url = image.replace( folderPrefix,"");
 		// change suffix
-		JPEG_suffix = /.jpg/gi;	// regex to change file suffix
-		var image_url = image_url.replace( JPEG_suffix,"_tn.jpg");
+		var JPEG_suffix = new RegExp("\.jpg","gi");	// regex to change file suffix
+		var image_url = image_url.replace( JPEG_suffix,thumbnailSuffix);
 
 		// find next image in collection, or loop back to front
 		var index = thumbnailList.indexOf( image_url )
@@ -129,7 +133,8 @@ $(document).ready(function(){
 		id = (index+iterator+len)%len;
 
 		// convert thumbnail id to regular id
-		JPEG_suffix = /_tn.jpg/gi;	// regex to change file suffix
+		//JPEG_suffix = /_tn.jpg/gi;	// regex to change file suffix
+		JPEG_suffix = new RegExp(thumbnailSuffix+"$");
 		image_url = thumbnailList[id].replace( JPEG_suffix,".jpg");
 		
 		// fade out current image
@@ -168,8 +173,8 @@ $(document).ready(function(){
 	function preLoadImage(filename){
 
 		// check if suffixed to imagees directory
-		if( filename.indexOf("images/") == -1){
-			filename = "images/"+filename;
+		if( filename.indexOf(imageFolder) == -1){
+			filename = imageFolder+filename;
 		}
 
 		// begin preloading process
@@ -189,7 +194,7 @@ $(document).ready(function(){
 		$("#image_Box #fullImage").attr("src",filename);
 
 		// fade image into view
-		$("#image_Box #fullImage").fadeIn();
+		$("#image_Box #fullImage").fadeIn("fast");
 	}
 
 	// check if slideshow image Box window open
